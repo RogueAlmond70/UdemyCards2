@@ -45,7 +45,7 @@ type card struct {
 
 func createDeck() []card {
 	var Deck []card
-	for j := 0; j < 3; j++ {
+	for j := 0; j < 4; j++ {
 
 		for i := 1; i < 15; i++ {
 			var suite string
@@ -67,43 +67,45 @@ func createDeck() []card {
 				suite = "Diamonds"
 				colour = "Red"
 
+			}
+
+			cardAsString := strings.ToTitle(strconv.Itoa(i))
+			switch i {
+			case 11:
+				card := card{
+					colour: colour,
+					value:  10,
+					name:   fmt.Sprintf("Jack Of %s", suite),
+				}
+
+				Deck = append(Deck, card)
+
+			case 12:
+				card := card{
+					colour: colour,
+					value:  10,
+					name:   fmt.Sprintf("Queen Of %s", suite),
+				}
+				Deck = append(Deck, card)
+
+			case 13:
+				card := card{
+					colour: colour,
+					value:  10,
+					name:   fmt.Sprintf("King Of %s", suite),
+				}
+				Deck = append(Deck, card)
+
+			case 14:
+				card := card{
+					colour: colour,
+					value:  11,
+					name:   fmt.Sprintf("Ace Of %s", suite),
+				}
+				Deck = append(Deck, card)
+
 			default:
-
-				cardAsString := strings.ToTitle(strconv.Itoa(i))
-				switch i {
-				case 11:
-					card := card{
-						colour: colour,
-						value:  10,
-						name:   fmt.Sprintf("Jack Of %s", suite),
-					}
-					Deck = append(Deck, card)
-
-				case 12:
-					card := card{
-						colour: colour,
-						value:  10,
-						name:   fmt.Sprintf("Queen Of %s", suite),
-					}
-					Deck = append(Deck, card)
-
-				case 13:
-					card := card{
-						colour: colour,
-						value:  10,
-						name:   fmt.Sprintf("King Of %s", suite),
-					}
-					Deck = append(Deck, card)
-
-				case 14:
-					card := card{
-						colour: colour,
-						value:  11,
-						name:   fmt.Sprintf("Ace Of %s", suite),
-					}
-					Deck = append(Deck, card)
-
-				default:
+				if i >= 2 {
 					card := card{
 						colour: colour,
 						value:  i,
@@ -112,15 +114,19 @@ func createDeck() []card {
 					Deck = append(Deck, card)
 				}
 			}
-
 		}
+
 	}
+
 	return Deck
 }
 
 func main() {
 
-	for _, i := range createDeck() {
-		fmt.Println(i)
+	ourDeck := createDeck()
+
+	for i, c := range ourDeck {
+		fmt.Printf("\n Card number %v - Card name %s", i+1, c.name)
+
 	}
 }
