@@ -164,4 +164,43 @@ func TestNewDeck(t *testing.T) {
 
 	})
 
+	t.Run("Values should be the same as the card number, then 10 for Jack, Queen and King, and 11 for Ace.", func(t *testing.T) {
+		pictureValue := 10
+		aceValue := 11
+		for _, card := range NewDeck() {
+
+			// Check if Atoi returns an error. If so, then we know it's not a number card, and proceed accordingly. This is ok because strings.Split does not return an error.
+
+			number, err := strconv.Atoi(strings.Split(card.name, " ")[0])
+			if err != nil {
+				actualCard := strings.Split(card.name, " ")[0]
+
+				switch actualCard {
+				case "Jack":
+					if card.value != pictureValue {
+						t.Errorf("Jack should have value of %v. Got %v", pictureValue, card.value)
+					}
+
+				case "Queen":
+					if card.value != pictureValue {
+						t.Errorf("Queen should have value of %v. Got %v", pictureValue, card.value)
+					}
+				case "King":
+					if card.value != pictureValue {
+						t.Errorf("King should have value of %v. Got %v", pictureValue, card.value)
+					}
+				case "Ace":
+					if card.value != aceValue {
+						t.Errorf("Ace should have value of %v. Got %v", aceValue, card.value)
+					}
+
+				}
+				// If picture card with no error, or number card, then...
+				if err == nil && (number != card.value) {
+					t.Errorf("Card value is %v but card number is %v. These should be the same.", card.value, number)
+				}
+			}
+		}
+	})
+
 }
