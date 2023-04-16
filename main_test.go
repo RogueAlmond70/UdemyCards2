@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -108,6 +110,35 @@ func TestNewDeck(t *testing.T) {
 			}
 		}
 
+	})
+	t.Run("Each suite should have cards numbered 2 to 10, then Jack, Queen, King, Ace.", func(t *testing.T) {
+		for _, card := range NewDeck() {
+
+			switch card.suite {
+			case "Clubs":
+
+				// Check if Atoi returns an error. If so, then we know it's not a number card, and proceed accordingly. This is ok because strings.Split does not return an error.
+				number, err := strconv.Atoi(strings.Split(card.name, " ")[0])
+				if err != nil {
+					actualCard := strings.Split(card.name, " ")[0]
+
+					if actualCard != "Jack" &&
+						actualCard != "Queen" &&
+						actualCard != "King" &&
+						actualCard != "Ace" {
+						t.Errorf("Not a numbered card, and not an accepted picture card. Got %v instead.", actualCard)
+					}
+					// It's not a number card, and it is definitely an accepted picture card, so we should...
+					// Well, the test should pass
+				}
+
+				// If the test reaches this point, either it is an accepted picture card (which would have meant err != nil) or it is a number card.
+				// err being nil means it is definitely a number card
+				if err == nil && (number < 2 || number > 10) {
+					t.Errorf("Number must be between 2 and 10. Got %v. Card was %v", number, card.name)
+				}
+			}
+		}
 	})
 
 }

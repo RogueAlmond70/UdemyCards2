@@ -129,10 +129,14 @@ func NewDeck() []card {
 
 func main() {
 
+	testString := "10 of Something"
+	fmt.Println(strings.Split(testString, " ")[0])
+
 	ourDeck := NewDeck()
 
-	for i, c := range ourDeck {
-		fmt.Printf("\n Card number %v - Card name %s", i+1, c.name)
+	for _, c := range ourDeck {
+		//fmt.Printf("\n %v", c.name)
+		fmt.Println(strings.Split(c.name, " ")[0])
 
 	}
 }
