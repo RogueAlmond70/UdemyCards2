@@ -41,9 +41,10 @@ type card struct {
 	colour string
 	value  int
 	name   string
+	suite  string
 }
 
-func createDeck() []card {
+func NewDeck() []card {
 	var Deck []card
 	for j := 0; j < 4; j++ {
 
@@ -74,6 +75,7 @@ func createDeck() []card {
 			case 11:
 				card := card{
 					colour: colour,
+					suite:  suite,
 					value:  10,
 					name:   fmt.Sprintf("Jack Of %s", suite),
 				}
@@ -83,6 +85,7 @@ func createDeck() []card {
 			case 12:
 				card := card{
 					colour: colour,
+					suite:  suite,
 					value:  10,
 					name:   fmt.Sprintf("Queen Of %s", suite),
 				}
@@ -91,6 +94,7 @@ func createDeck() []card {
 			case 13:
 				card := card{
 					colour: colour,
+					suite:  suite,
 					value:  10,
 					name:   fmt.Sprintf("King Of %s", suite),
 				}
@@ -99,6 +103,7 @@ func createDeck() []card {
 			case 14:
 				card := card{
 					colour: colour,
+					suite:  suite,
 					value:  11,
 					name:   fmt.Sprintf("Ace Of %s", suite),
 				}
@@ -108,6 +113,7 @@ func createDeck() []card {
 				if i >= 2 {
 					card := card{
 						colour: colour,
+						suite:  suite,
 						value:  i,
 						name:   fmt.Sprintf("%s Of %s", cardAsString, suite),
 					}
@@ -123,7 +129,7 @@ func createDeck() []card {
 
 func main() {
 
-	ourDeck := createDeck()
+	ourDeck := NewDeck()
 
 	for i, c := range ourDeck {
 		fmt.Printf("\n Card number %v - Card name %s", i+1, c.name)
