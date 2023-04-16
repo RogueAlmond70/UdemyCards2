@@ -204,3 +204,28 @@ func TestNewDeck(t *testing.T) {
 	})
 
 }
+
+func TestShuffle(t *testing.T) {
+
+	t.Run("Check there are no duplicate cards", func(t *testing.T) {
+		want := 1
+		count := 0
+
+		ourDeck := Shuffle(NewDeck())
+		checkDeck := NewDeck()
+
+		for _, ourCard := range ourDeck {
+			for _, checkCard := range checkDeck {
+				if checkCard == ourCard {
+					count++
+				}
+			}
+			// Once we have looped through checking our card against each card in the check deck, we then check if the counter went above 1. If so we have a duplicate and return false
+			if count != want {
+				t.Errorf("Wanted %v, got %v", want, count)
+			}
+			// We reset the "got" counter for the next card
+			count = 0
+		}
+	})
+}

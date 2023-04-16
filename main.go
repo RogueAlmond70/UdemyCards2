@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
 
 /*
@@ -31,7 +33,6 @@ newDeckFromFile()
 
 Objects we will require:
 
- - A suite struct, with numbers of the cards, colour, and picture cards, and whether the card has been dealt
  - A card struct, which has properties including the number, suite, and colour
 
 
@@ -127,6 +128,46 @@ func NewDeck() []card {
 	return Deck
 }
 
-func main() {
+// For this we will implement the Fisher Yates shuffle.
 
+/*
+Fisher-Yates Shuffle Algorithm:
+Input: An array or list of elements
+
+1. For i from n - 1 to 1, where n is the number of elements in the array:
+ 1. Generate a random integer j such that 0 <= j <= i
+ 2. Swap the element at index i with the element at index j
+
+Output: The shuffled array or list of elements
+*/
+func Shuffle(Deck []card) []card {
+
+	var outPutDeck = NewDeck()
+
+	n := len(Deck)
+
+	// Get the current time as seed
+	seed := time.Now().UnixNano()
+
+	// Create a new Rand instance with the current time as seed
+	r := rand.New(rand.NewSource(seed))
+
+	for i := n - 1; i > 0; i-- {
+		// Generate a random index from the remaining unshuffled elements
+		j := r.Intn(i + 1)
+
+		// Swap the current element with the randomly selected element
+		Deck[i], outPutDeck[j] = outPutDeck[j], Deck[i]
+	}
+
+	return outPutDeck
+}
+
+func main() {
+	var InputDeck = NewDeck
+	var TestDeck = Shuffle(InputDeck())
+
+	for _, card := range TestDeck {
+		fmt.Println(card)
+	}
 }
