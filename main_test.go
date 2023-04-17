@@ -228,4 +228,32 @@ func TestShuffle(t *testing.T) {
 			count = 0
 		}
 	})
+
+	t.Run("Check the cards have moved position", func(t *testing.T) {
+		unshuffledDeck := NewDeck()
+		shuffledDeck := Shuffle(NewDeck())
+		stubbornCards := 0
+
+		for i, _ := range shuffledDeck {
+			if shuffledDeck[i] == unshuffledDeck[i] {
+				stubbornCards++
+			}
+		}
+		if stubbornCards >= 7 {
+			t.Errorf("Expected at least 45 cards to be in different positions. %v card(s) remain in the same position", stubbornCards)
+		}
+
+	})
+
+	t.Run("Check we still have 52 cards", func(t *testing.T) {
+		shuffledDeck := Shuffle(NewDeck())
+
+		counter := 0
+		for _, _ = range shuffledDeck {
+			counter++
+		}
+		if counter != 52 {
+			t.Errorf("Expected 52 cards, got %v", counter)
+		}
+	})
 }

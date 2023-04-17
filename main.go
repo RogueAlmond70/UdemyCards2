@@ -140,11 +140,20 @@ Input: An array or list of elements
 
 Output: The shuffled array or list of elements
 */
+
+// Let's try splitting the deck in 2, shuffling, then recombining the 2 halves
 func Shuffle(Deck []card) []card {
+	var outputDeck = NewDeck()
 
-	var outPutDeck = NewDeck()
+	var mid = len(Deck) / 2
+	var half1 = Deck[0:mid]
+	var half2 = Deck[mid:]
 
-	n := len(Deck)
+	var outHalf1 = outputDeck[0:25]
+	var outHalf2 = outputDeck[26:51]
+
+	n1 := len(half2)
+	n2 := len(half2)
 
 	// Get the current time as seed
 	seed := time.Now().UnixNano()
@@ -152,17 +161,29 @@ func Shuffle(Deck []card) []card {
 	// Create a new Rand instance with the current time as seed
 	r := rand.New(rand.NewSource(seed))
 
-	for i := n - 1; i > 0; i-- {
+	// Shuffle the first half
+	for i := n1 - 1; i > 0; i-- {
 		// Generate a random index from the remaining unshuffled elements
-		j := r.Intn(i + 1)
+		j := r.Intn(i)
 
 		// Swap the current element with the randomly selected element
-		Deck[i], outPutDeck[j] = outPutDeck[j], Deck[i]
+		half1[i], outHalf1[j] = outHalf1[j], half1[i]
 	}
 
-	return outPutDeck
-}
+	// Shuffle the second half
+	for i := n2 - 1; i > 0; i-- {
+		// Generate a random index from the remaining unshuffled elements
+		j := r.Intn(i)
 
+		// Swap the current element with the randomly selected element
+		half2[i], outHalf2[j] = outHalf2[j], half2[i]
+	}
+
+	// stick the two halves back together
+	outputDeck = append(half1, half2...)
+
+	return outputDeck
+}
 func main() {
 	var InputDeck = NewDeck
 	var TestDeck = Shuffle(InputDeck())
