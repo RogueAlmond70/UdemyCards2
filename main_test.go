@@ -257,3 +257,121 @@ func TestShuffle(t *testing.T) {
 		}
 	})
 }
+
+func TestDeal(t *testing.T) {
+	t.Run("Check the function deals a hand of 5 cards", func(t *testing.T) {
+		Expected := 5
+		Got := 0
+
+		ourHand := Deal(Shuffle(NewDeck()))
+
+		for _, _ = range ourHand {
+			Got++
+		}
+		if Got != Expected {
+			t.Errorf("Expected %v cards, got %v", Expected, Got)
+		}
+	})
+
+	t.Run("Check the hand is shuffled and not a sequence", func(t *testing.T) {
+		//ourHand := Deal(Shuffle(NewDeck()))
+		testHand2 := []card{
+			{
+				"Black",
+				2,
+				"Two Of Clubs",
+				"Clubs",
+			},
+			{
+				"Black",
+				3,
+				"Three Of Spades",
+				"Spades",
+			},
+
+			{
+				"Black",
+				7,
+				"Seven Of Spades",
+				"Spades",
+			},
+			{
+				"Red",
+				2,
+				"Two Of Hearts",
+				"Hearts",
+			},
+			{
+				"Red",
+				9,
+				"Nine Of Diamonds",
+				"Diamonds",
+			},
+		}
+
+		testHand3 := []card{
+			{
+				"Black",
+				2,
+				"Two Of Clubs",
+				"Clubs",
+			},
+			{
+				"Black",
+				3,
+				"Three Of Clubs",
+				"Clubs",
+			},
+
+			{
+				"Black",
+				7,
+				"Seven Of Spades",
+				"Spades",
+			},
+			{
+				"Red",
+				2,
+				"Two Of Hearts",
+				"Hearts",
+			},
+			{
+				"Red",
+				9,
+				"Nine Of Diamonds",
+				"Diamonds",
+			},
+		}
+
+		var tracker card
+		var shuffled = true
+
+		for i, card := range testHand2 {
+			if i == 0 {
+				// If it's the first card, we skip this iteration of the loop
+				tracker = card
+				continue
+			}
+
+			if (card.value == tracker.value+1 || card.value == tracker.value-1) && card.suite == tracker.suite {
+				shuffled = false
+			}
+			if !shuffled {
+				t.Errorf("Two cards in a sequence. Expected none.")
+			}
+		}
+
+		for i, card := range testHand3 {
+			if i == 0 {
+				tracker = card
+				continue
+			}
+			if (card.value == tracker.value+1 || card.value == tracker.value-1) && card.suite == tracker.suite {
+				shuffled = false
+			}
+			if shuffled {
+				t.Errorf("Two cards in a sequence. Expected none.")
+			}
+		}
+	})
+}

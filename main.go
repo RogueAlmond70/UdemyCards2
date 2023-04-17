@@ -184,6 +184,17 @@ func Shuffle(Deck []card) []card {
 
 	return outputDeck
 }
+
+func Deal(Deck []card) []card {
+	var hand []card
+
+	for i := 0; i < 5; i++ {
+		hand = append(hand, Deck[i])
+	}
+
+	return hand
+}
+
 func main() {
 	var InputDeck = NewDeck
 	var TestDeck = Shuffle(InputDeck())
